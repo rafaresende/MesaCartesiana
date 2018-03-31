@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Tela de desenho"
+        android:id="@+id/des"/>
+    <item
+        android:id="@+id/desconnect"
+        android:title="Desconectar" />
+</menu>

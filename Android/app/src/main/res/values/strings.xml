@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">CONTROLE MESA XY</string>
+
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="title_activity_draw_path">DrawPath</string>
+</resources>

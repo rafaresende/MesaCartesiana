@@ -85,6 +85,10 @@ long MotorPasso :: getPulses(){
   return _pulses;
 }
 
+void MotorPasso :: setPulses(long pulso){
+  _pulses = pulso;
+}
+
 bool MotorPasso :: goZero(){
   while (digitalRead(_sensorPin)!=LOW){
     setDir(true);

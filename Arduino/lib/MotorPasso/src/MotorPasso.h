@@ -36,6 +36,7 @@
       void disable();
       void setPeriod(unsigned long period);
       long getPulses();
+      void setPulses(long pulso);
       bool goZero();
       void setDir(bool dir);
     };

@@ -25,8 +25,8 @@ bool ori = false;
 void setup() {
     // put your setup code here, to run once:
     Serial.begin(9600);
-    //motorX.goZero();
-    //motorY.goZero();
+    motorX.goZero();
+    motorY.goZero();
 }
 
 void loop() {
@@ -128,18 +128,37 @@ void loop() {
       motorX.moveTo(xDesPos);
       motorY.moveTo(yDesPos);
     } else if (manualY) {
-      motorY.enable();
+      if(yAtual <= 8000 && yAtual >= 0) {
+        motorY.enable();
+      } else {
+        motorY.disable();
+      }
     } else if (manualX) {
-      motorX.enable();
+      if(xAtual <= 10500 && xAtual >= 0) {
+        motorX.enable();
+      } else {
+        motorX.disable();
+      }
     } else if (ori) {
-      motorX.goZero();
-      motorY.goZero();
+      if(motorX.goZero() && motorY.goZero()){
+        ori = false;
+        stop = true;
+      };
     }
 
+    if(digitalRead(7)==LOW){
+      yAtual = 0;
+      motorY.setPulses(0);
+    }
+
+    if(digitalRead(6)==LOW){
+      xAtual = 0;
+      motorX.setPulses(0);
+    }
 
     //Envia posicao atual
     String Y = "Y";
-    String A = xAtual + Y + yAtual;
+    String A = xAtual/50 + Y + yAtual/50;
     serial1.sendData(A);
 
 }

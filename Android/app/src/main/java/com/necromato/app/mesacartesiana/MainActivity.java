@@ -117,6 +117,56 @@ public class MainActivity extends AppCompatActivity {
 
         //new ConnectBT().execute(); //Call the class to connect
 
+        yDesejado.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    int Y = Integer.parseInt(yDesejado.getText().toString());
+                    if(Y>160){
+                        yDesejado.setText("160");
+                    }
+                } catch (NumberFormatException e) {
+                    yDesejado.setText("0");
+                }
+
+            }
+        });
+
+        xDesejado.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    int X = Integer.parseInt(xDesejado.getText().toString());
+                    if(X>210){
+                        xDesejado.setText("210");
+                    }
+                } catch (NumberFormatException e) {
+                    xDesejado.setText("0");
+                }
+
+            }
+        });
+
         vel.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -134,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                     double speed = Double.parseDouble(vel.getText().toString());
                     BT.writeValue("VEL" + speed + "\n");
                 } catch (NumberFormatException e) {
-                    vel.setText("1");
+                    vel.setText("5");
+                    BT.writeValue("VEL" + vel.getText().toString() + "\n");
                 }
 
             }
@@ -143,6 +194,26 @@ public class MainActivity extends AppCompatActivity {
 
 
         //commands to be sent to bluetooth
+
+        origem.setOnClickListener(new View.OnClickListener() {
+
+            boolean ori = false;
+
+            @Override
+            public void onClick(View v)
+            {
+
+                if(!ori){
+                    BT.writeValue("GO_0\n");
+                    ori = true;
+                    origem.setBackgroundResource(R.drawable.button_clicked);
+                } else {
+                    stop();
+                    ori = false;
+                    origem.setBackgroundResource(R.drawable.button_notclicked);
+                }
+            }
+        });
 
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,9 +327,13 @@ public class MainActivity extends AppCompatActivity {
 
         double speed = Double.parseDouble(vel.getText().toString());
 
-        BT.writeValue("X" + xDesejado.getText().toString()+"\n");
+        int X = Integer.parseInt(xDesejado.getText().toString()) * 50;
 
-        BT.writeValue("Y" + yDesejado.getText().toString()+"\n");
+        int Y = Integer.parseInt(yDesejado.getText().toString()) * 50;
+
+        BT.writeValue("X" + X + "\n");
+
+        BT.writeValue("Y" + Y + "\n");
 
         BT.writeValue("AV" + speed + "\n");
     }
